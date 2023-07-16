@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Add a New Member</legend>
+                <div class="form-group">
+                    {{ form.first_name.label(class="form-control-label") }}
+                    {% if form.first_name.errors %}
+                        {{ form.first_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.first_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                 <div class="form-group">
+                    {{ form.last_name.label(class="form-control-label") }}
+
+                    {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.last_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+                 <div id="vm">
+
+                 <div class="form-group">
+                    {{ form.grade.label(class="form-control-label") }}
+                    {% if form.grade.errors %}
+                        {{ form.grade(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.grade.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+
+                        <select class="form-select form-control form-control-lg" name="selectedGrade" v-model="selectedOption">
+                                <option disabled value="">Select Grade in The Menu</option>
+                                {% for grade in grades %}
+                                  <option value="{{ grade }}">{{ grade }}</option>
+                                {% endfor %}
+                                <option value="other">Other</option>
+                        </select>
+                    {% endif %}
+                </div>
+
+
+
+                <div class="form-group" v-if="selectedOption === 'other'">
+                    <h5>New Grade Adding</h5>
+                    {{ form.grade.label(class="form-control-label") }}
+                    {% if form.grade.errors %}
+                        {{ form.grade(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.grade.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.grade(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.phone.label(class="form-control-label") }}
+                    {% if form.phone.errors %}
+                        {{ form.phone(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.phone.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.phone(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+                <div>
+                     <div v-if="!checkboxValue">
+                         <div id="chapter" class="align-items-start">
+                            <p class="p-2 ml-5 mt-5 text-warning">For Organizational Staff - Not Required</p>
+                 <div class="form-group">
+                    {{ form.chapter.label(class="form-control-label") }}
+                    {% if form.chapter.errors %}
+                        {{ form.grade(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.chapter.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+
+                        <select class="form-select form-control form-control-lg" name="selectedChapter" v-model="selectedOptionChapter">
+                                <option disabled value="">Select Grade in The Menu</option>
+                                {% for chapter in chapters %}
+                                  <option value="{{ chapter }}">{{ chapter }}</option>
+                                {% endfor %}
+                                <option value="other">Other</option>
+                        </select>
+                    {% endif %}
+                </div>
+
+                    <div class="form-group p-2" v-if="selectedOptionChapter === 'other'">
+                        <h5>New Chapter Adding</h5>
+                        {{ form.chapter.label(class="form-control-label") }}
+                        {% if form.chapter.errors %}
+                            {{ form.chapter(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback p-2">
+                                {% for error in form.chapter.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.chapter(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+
+
+                    <div class="form-group d-flex flex-row align-items-start">
+                        <div class="p-2">{{ form.chapter_pres.label(class="form-control-label") }}</div>
+                        <div class="form-check p-2 ml-3 mt-1">
+                            {% if form.chapter_pres.errors %}
+                                {{ form.chapter_pres(class="form-check-input is-invalid") }}
+                                <div class="invalid-feedback p-2 ml-3 mt-1">
+                                    {% for error in form.chapter_pres.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.chapter_pres(class="form-check-input") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+                <div class="form-group d-flex flex-row align-items-start mt-5">
+                      <div class="p-2">{{ form.org_staff.label(class="form-control-label") }}</div>
+                    <div class="form-check p-2 ml-3 mt-1" v-model="checkboxValue" @change="toggleDiv">
+                        {% if form.org_staff.errors %}
+                            {{ form.org_staff(class="form-check-input is-invalid") }}
+                            <div class="invalid-feedback p-2 ml-3 mt-1">
+                                {% for error in form.org_staff.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.org_staff(class="form-check-input") }}
+                        {% endif %}
+                    </div>
+                </div>
+                </div>
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
+
