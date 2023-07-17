@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+ <div class="list-group">
+  {% for unique_chapter in unique_chapters %}
+   <a href="{{ url_for('chapter', chapt=unique_chapter[0]) }}" class="list-group-item list-group-item-action list-group-item-info">{{ unique_chapter[0] }}</a>
+  {% endfor %}
+</div>
+{% endblock content %}

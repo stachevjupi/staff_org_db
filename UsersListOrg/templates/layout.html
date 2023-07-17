@@ -23,7 +23,9 @@
       <nav class="navbar navbar-dark navbar-expand-md bg-teal fixed-top">
         <div class="container">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link text-primary st-info" href="#"><b>Staff Information</b></a>
+                {% if current_user.org_staff == 1 %}
+                    <a class="nav-item nav-link text-primary st-info" href="{{ url_for('org_staff') }}"><b>Staff Information</b></a>
+                {% endif %}
             </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,15 +33,25 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
 
-
-                    <a class="nav-item nav-link a-tag" href="#"><b>Organizational staff</b></a>
-                    <a class="nav-item nav-link a-tag" href="#"><b>Chapters</b></a>
-                    <a class="nav-item nav-link text-success a-tag" href="#"><small><b>Add a New Member</b></small></a>
+                {% if current_user.org_staff == 1 and current_user.is_authenticated %}
+                    <a class="nav-item nav-link a-tag" href="{{ url_for('chapters') }}"><b>Chapters</b></a>
+                    <a class="nav-item nav-link text-success a-tag" href="{{ url_for('register') }}"><small><b>Add a New Member</b></small></a>
+                {% elif current_user.is_authenticated %}
+                    <a class="nav-item nav-link a-tag" href="#"><b>Roster</b></a>
+                    {% if current_user.chapter_pres == 1 %}
+                    <a class="nav-item nav-link text-success a-tag" href="{{ url_for('register') }}"><small><b>Add a New Member</b></small></a>
+                    {% endif %}
+                {% endif %}
+            </div>
 
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-                    <a class="nav-item nav-link text-warning a-tag" href="{{ url_for('logout') }}"><small><b>Logout</b></small></a>
+                {% if current_user.is_authenticated %}
+                    <a class="nav-item nav-link text-warning a-tag" href="{{ url_for('logout') }}"><small>Logout</small></a>
+                {% else %}
+                    <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                {% endif %}
             </div>
           </div>
         </div>

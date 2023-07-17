@@ -100,6 +100,7 @@
                     {% endif %}
                 </div>
 
+{% if current_user.org_staff == 1 %}
 
                 <div>
                      <div v-if="!checkboxValue">
@@ -181,6 +182,7 @@
                 </div>
 
             </fieldset>
+            {% endif %}
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>

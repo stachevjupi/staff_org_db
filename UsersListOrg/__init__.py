@@ -21,7 +21,7 @@ app.config[
 db = flask_sqlalchemy.SQLAlchemy(app)
 migrate = flask_migrate.Migrate(app, db)
 
-os.environ["EMAIL_USER"] = "staff.org@gmail.com"
+os.environ["EMAIL_USER"] = "paintings.gallery.blog@gmail.com"
 os.environ["EMAIL_PASS"] = "tQc3RFfmhz4pCw0N"
 
 bcrypt = Bcrypt(app)
