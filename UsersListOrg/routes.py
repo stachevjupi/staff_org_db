@@ -10,15 +10,20 @@ from flask_mail import Message
 
 @app.route("/", methods=(['POST', 'GET']))
 def login():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.org_staff == 1:
         return redirect(url_for('rosters'))
+    elif current_user.is_authenticated:
+        return redirect(url_for('chptr'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('register'))
+            if current_user.is_authenticated and current_user.org_staff == 1:
+                return redirect(next_page) if next_page else redirect(url_for('rosters'))
+            elif current_user.is_authenticated:
+                return redirect(next_page) if next_page else redirect(url_for('chptr'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -67,8 +72,6 @@ If you did not make this request then simply ignore this email and no changes wi
 @app.route("/register", methods=['GET', 'POST'])
 @login_required
 def register():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('posts'))
     users = User.query.all()
     chapters = []
     grades = []
@@ -109,6 +112,7 @@ def register():
         flash('Your new member created ! (Successfully added to the roster)', 'success')
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_standard_email(user, password)
+        print(password)
         return redirect(url_for('login'))
     return render_template('register.html', title='Registration', form=form, chapters=unique_chapters,
                            grades=unique_grades)
@@ -158,7 +162,7 @@ def rosters():
 def org_staff():
     users = User.query.filter_by(org_staff=1).all()
     if current_user.org_staff == 1:
-        return render_template('org_staff.html', title='Organizational staff', users=users)
+        return render_template('rosters.html', title='Organizational staff', users=users)
 
 
 @app.route("/chapters")
@@ -172,7 +176,25 @@ def chapters():
 @app.route("/chapters/<string:chapt>")
 @login_required
 def chapter(chapt):
-    print(chapt)
-    users = User.query.filter_by(chapter=chapt).first_or_404()
-    print(users)
+    users = User.query.filter_by(chapter=chapt).all()
     return render_template('rosters.html', users=users)
+
+
+@app.route("/rosters/chapter")
+@login_required
+def chptr():
+    users = User.query.filter_by(chapter=current_user.chapter).all()
+    return render_template('rosters.html', users=users)
+
+
+@app.route("/rosters/<string:variable>")
+@login_required
+def arrange(variable):
+    current_route = request.path
+    print(current_route)
+    users = User.query.order_by(variable).all()
+    if current_user.org_staff == 1:
+        return render_template('rosters.html', title='Rosters', users=users)
+    elif current_user.is_authenticated:
+        users = [user for user in users if user.chapter == current_user.chapter]
+        return render_template('rosters.html', title='Rosters', users=users)

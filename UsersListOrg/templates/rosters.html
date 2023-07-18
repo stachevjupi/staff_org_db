@@ -3,27 +3,27 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Grade</th>
-      <th scope="col">Email</th>
+      <th scope="col"><img src="/static/list.png" style="width: 2.5vh; height: 2.5vh;" alt="List"></th>
+      <th scope="col" class="w-15"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='first_name') }}">First Name</a></th>
+        <th scope="col" class="w-18"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='last_name') }}">Last Name</a></th>
+      <th scope="col"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='grade') }}">Grade</a></th>
+      <th scope="col"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='email') }}">Email</a></th>
       <th scope="col">Phone</th>
     </tr>
   </thead>
   <tbody>
-  {% set counter = 0 %}
+
   {% if users is iterable %}
   {% for user in users %}
     <tr>
-      <th scope="row">{{ counter }}</th>
+      <th scope="row">{{ loop.index }}</th>
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>
       <td>{{ user.grade }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.phone }}</td>
     </tr>
-    {% set counter = counter + 1 %}
+
   {% endfor %}
   {% else %}
    <tr>

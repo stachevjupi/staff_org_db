@@ -157,3 +157,8 @@ a.article-title:hover {
 .disaplayInput{
 display: none;
 }
+
+.tb-nav{
+margin: 0;
+padding: 0;
+}

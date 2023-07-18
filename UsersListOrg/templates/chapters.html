@@ -2,7 +2,9 @@
 {% block content %}
  <div class="list-group">
   {% for unique_chapter in unique_chapters %}
+  <div class="col-6">
    <a href="{{ url_for('chapter', chapt=unique_chapter[0]) }}" class="list-group-item list-group-item-action list-group-item-info">{{ unique_chapter[0] }}</a>
-  {% endfor %}
+  </div>
+   {% endfor %}
 </div>
 {% endblock content %}
