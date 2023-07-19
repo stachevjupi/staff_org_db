@@ -1,5 +1,5 @@
 from UsersListOrg import app, bcrypt, db, mail
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, abort
 from UsersListOrg.models import User
 from UsersListOrg.forms import LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm
 from flask_login import login_user, logout_user, login_required, current_user
@@ -101,6 +101,8 @@ def register():
             chapter = form.chapter.data
         elif chapter_sel:
             chapter = chapter_sel
+        elif current_user.chapter_pres == 1:
+            chapter=current_user.chapter
         else:
             chapter = "Not Specified"
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, grade=grade,
@@ -162,7 +164,7 @@ def rosters():
 def org_staff():
     users = User.query.filter_by(org_staff=1).all()
     if current_user.org_staff == 1:
-        return render_template('rosters.html', title='Organizational staff', users=users)
+        return render_template('roster_org.html', title='Organizational staff', users=users)
 
 
 @app.route("/chapters")
@@ -177,7 +179,7 @@ def chapters():
 @login_required
 def chapter(chapt):
     users = User.query.filter_by(chapter=chapt).all()
-    return render_template('rosters.html', users=users)
+    return render_template('roster_chapt.html', users=users, chapt=chapt)
 
 
 @app.route("/rosters/chapter")
@@ -187,14 +189,108 @@ def chptr():
     return render_template('rosters.html', users=users)
 
 
-@app.route("/rosters/<string:variable>")
+@app.route("/arrange/<string:variable>")
 @login_required
 def arrange(variable):
-    current_route = request.path
-    print(current_route)
+    print(variable)
     users = User.query.order_by(variable).all()
-    if current_user.org_staff == 1:
+    if current_user.is_authenticated and current_user.org_staff == 1:
         return render_template('rosters.html', title='Rosters', users=users)
-    elif current_user.is_authenticated:
+    elif current_user.is_authenticated and current_user.org_staff == 0:
         users = [user for user in users if user.chapter == current_user.chapter]
         return render_template('rosters.html', title='Rosters', users=users)
+
+
+@app.route("/arrange_org/<string:variable>")
+@login_required
+def arrange_org(variable):
+    users = User.query.order_by(variable).all()
+    if current_user.is_authenticated and current_user.org_staff == 1:
+        users = [user for user in users if user.org_staff == 1]
+        return render_template('roster_org.html', title='Rosters', users=users)
+
+
+@app.route("/<string:variable1>/<string:variable2>")
+@login_required
+def arrange_chapt(variable1, variable2):
+    users = User.query.order_by(variable2).all()
+    if current_user.is_authenticated and current_user.org_staff == 1:
+        users = [user for user in users if user.chapter == variable1]
+        return render_template('roster_chapt.html', title='Rosters', users=users, chapt=variable1)
+
+
+@app.route("/roster/<int:user_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_member(user_id):
+    user = User.query.get_or_404(user_id)
+    if current_user.id != user_id and current_user.chapt_pres == 0 and current_user.org_staf == 0:
+        abort(403)
+    users = User.query.all()
+    chapters = []
+    grades = []
+    unique_chapters = []
+    unique_grades = []
+    for member in users:
+        grades.append(member.grade)
+        if member.chapter is not None:
+            chapters.append(member.chapter)
+        unique_grades = list(set(grades))
+        unique_chapters = list(set(chapters))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        chapter_pres = 1 if form.chapter_pres.data else 0
+        org_staff = 1 if form.org_staff.data else 0
+        grade_sel = request.form.get('selectedGrade')
+        if form.grade.data:
+            grade = form.grade.data
+        elif grade_sel:
+            grade = grade_sel
+        else:
+            grade = "Not Specified"
+        chapter_sel = request.form.get('selectedChapter')
+        if form.chapter.data:
+            chapter = form.chapter.data
+        elif chapter_sel:
+            chapter = chapter_sel
+        elif current_user.chapter_pres == 1:
+            chapter=current_user.chapter
+        else:
+            chapter = "Not Specified"
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.grade = grade
+        user.email = form.email.data
+        user.phone = form.phone.data
+        user.chapter = chapter
+        user.chapter_pres = chapter_pres
+        user.org_staff = org_staff
+        db.session.commit()
+        flash('Your member data has been updated!', 'success')
+        return redirect(url_for('rosters'))
+    elif request.method == 'GET':
+        form.first_name.data = user.first_name
+        form.last_name.data = user.last_name
+        form.grade.data = user.grade
+        form.email.data = user.email
+        form.phone.data = user.phone
+        form.chapter.data = user.chapter
+        form.chapter_pres.data = user.chapter_pres
+        form.org_staff.data = user.org_staff
+    return render_template('register.html', title='Update Post', form=form, legend='Update Member data',
+                           chapters=unique_chapters,
+                           grades=unique_grades)
+
+
+# @app.route("/post/<int:post_id>/delete", methods=['POST'])
+# @login_required
+# def delete_post(post_id):
+#     post = Post.query.get_or_404(post_id)
+#     if current_user.username == 'Admin':
+#         db.session.delete(post)
+#         db.session.commit()
+#     elif post.author != current_user:
+#         abort(403)
+#     db.session.delete(post)
+#     db.session.commit()
+#     flash('Your post has been deleted!', 'success')
+#     return redirect(url_for('posts'))

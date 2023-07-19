@@ -4,10 +4,10 @@
   <thead>
     <tr>
       <th scope="col"><img src="/static/list.png" style="width: 2.5vh; height: 2.5vh;" alt="List"></th>
-      <th scope="col" class="w-15"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='first_name') }}">First Name</a></th>
-        <th scope="col" class="w-18"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='last_name') }}">Last Name</a></th>
-      <th scope="col"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange',  variable='grade') }}">Grade</a></th>
-      <th scope="col"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange', variable='email') }}">Email</a></th>
+      <th scope="col" class="w-15"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange_chapt', variable1=chapt, variable2='first_name') }}">First Name</a></th>
+        <th scope="col" class="w-18"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange_chapt', variable1=chapt, variable2='last_name') }}">Last Name</a></th>
+      <th scope="col"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange_chapt', variable1=chapt, variable2='grade') }}">Grade</a></th>
+      <th scope="col"><a class="nav-link text-info tb-nav" href="{{ url_for('arrange_chapt', variable1=chapt, variable2='email') }}">Email</a></th>
       <th scope="col">Phone</th>
     </tr>
   </thead>
