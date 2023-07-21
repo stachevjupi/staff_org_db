@@ -223,7 +223,8 @@ def arrange_chapt(variable1, variable2):
 @login_required
 def update_member(user_id):
     user = User.query.get_or_404(user_id)
-    if current_user.id != user_id and current_user.chapt_pres == 0 and current_user.org_staf == 0:
+    if current_user.id != user_id and (current_user.chapter == user.chapter and current_user.chapter_pres == 0)\
+            and current_user.org_staff == 0:
         abort(403)
     users = User.query.all()
     chapters = []

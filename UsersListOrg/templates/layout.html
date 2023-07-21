@@ -19,12 +19,13 @@
     {% endif %}
 </head>
 <body>
+ <div id="vm">
     <header class="site-header">
       <nav class="navbar navbar-dark navbar-expand-md bg-teal fixed-top">
         <div class="container">
             <div class="navbar-nav mr-auto">
                 {% if current_user.org_staff == 1 %}
-                    <a class="nav-item nav-link text-primary st-info" href="{{ url_for('rosters') }}"><b>All Staff</b></a>
+                    <a class="nav-item nav-link a-tag" href="{{ url_for('rosters') }}"><b>All Staff</b></a>
                 {% endif %}
             </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,28 +35,28 @@
             <div class="navbar-nav mr-auto">
 
                 {% if current_user.org_staff == 1 and current_user.is_authenticated %}
-                    <a class="nav-item nav-link text-primary st-info" href="{{ url_for('org_staff') }}"><small>Organizational Staff</small></a>
-                    <a class="nav-item nav-link a-tag" href="{{ url_for('chapters') }}"><b>Chapters</b></a>
-                    <a class="nav-item nav-link text-success a-tag" href="{{ url_for('register') }}"><small><b>Add a New Member</b></small></a>
+                    <a class="nav-item nav-link a-tag" href="{{ url_for('org_staff') }}">Organizational Staff</a>
+                    <a class="nav-item nav-link a-tag" href="{{ url_for('chapters') }}"><small><b>Chapters</b></small></a>
+                    <a class="nav-item nav-link text-success a-tag ml-2" href="{{ url_for('register') }}"><small><b>Add a New Member</b></small></a>
                 {% elif current_user.is_authenticated %}
                     <a class="nav-item nav-link a-tag" href="{{ url_for('chptr') }}"><b>Roster</b></a>
                     {% if current_user.chapter_pres == 1 %}
-                    <a class="nav-item nav-link text-success a-tag" href="{{ url_for('register') }}"><small><b>Add a New Member</b></small></a>
+                    <a class="nav-item nav-link text-success a-tag ml-2" href="{{ url_for('register') }}"><small><b>Add a New Member</b></small></a>
                     {% endif %}
                 {% endif %}
 
+                 {% block contentC %} {% endblock %}
 
-                  <div>
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_member', user_id=current_user.id) }}">Update</a>
-                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                  </div>
+
+
+
 
             </div>
 
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                 {% if current_user.is_authenticated %}
-                    <a class="nav-item nav-link text-warning a-tag" href="{{ url_for('logout') }}"><small>Logout</small></a>
+                    <a class="nav-item nav-link" href="{{ url_for('logout') }}"><small>Logout</small></a>
                 {% else %}
                     <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                 {% endif %}
@@ -65,6 +66,9 @@
       </nav>
     </header>
     <main role="main" class="container">
+
+
+
       <div class="row">
         <div class="col-md-8">
           {% with messages = get_flashed_messages(with_categories=true) %}
@@ -104,7 +108,7 @@
 
 
     </main>
-
+</div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS, CDN Vue -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

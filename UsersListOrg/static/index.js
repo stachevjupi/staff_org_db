@@ -4,13 +4,16 @@ const vm = new Vue({ // Again, vm is our Vue instance's name for consistency.
     data: {
     checkboxValue: false,
     selectedOption: '',
-    selectedOptionChapter: ''
+    selectedOptionChapter: '',
+    isVisible: false,
   },
   methods: {
     toggleDiv() {
       // Toggle the checkbox value
       this.checkboxValue = !this.checkboxValue;
     },
+    toggleElement() {
+      this.isVisible = !this.isVisible;
+    },
   }
 })
-
