@@ -19,13 +19,39 @@
   {% for user in users %}
     <tr>
       <th scope="row">{{ loop.index }}</th>
-      <td>{{ user.first_name }}</td>
-      <td>{{ user.last_name }}</td>
+        {% if current_user.id == user.id %}
+              <td class="text-primary">{{ user.first_name }}</td>
+              <td class="text-primary">{{ user.last_name }}</td>
+        {% else %}
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
+        {% endif %}
       <td>{{ user.grade }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.phone }}</td>
         {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
-            <td v-if="isVisible"><a href="{{ url_for('update_member', user_id=user.id) }}">Update</a></td>
+
+        <td v-if="isVisible" class="m-0 p-0">
+            <div class="btn-group mt-2 p-0" role="group" style="height: 30px;">
+            <a class="btn btn-secondary btn-sm" v-if="!showConfirmation" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
+            <button type="button"
+              v-if="!showConfirmation"
+              id="{{ loop.index }}"
+              class="btn btn-danger btn-sm ml-1 del-btn"
+              @click="showDeleteModal">Delete</button>
+
+                <div class="btn-group del-btn-yes" id="{{ loop.index }}" v-if="showConfirmation">
+                    <a class="btn btn-warning btn-sm"  href="{{ url_for('delete_member', user_id=user.id) }}">Delete</a>
+                    <button class="btn btn-info btn-sm ml-1" @click="cancelDelete">Close</button>
+                </div>
+
+            </div>
+
+        </td>
+
+
+
+
         {% endif %}
     </tr>
 
@@ -38,15 +64,24 @@
       <td>{{ users.grade }}</td>
       <td>{{ users.email }}</td>
       <td>{{ users.phone }}</td>
-        {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
-            <td v-if="isVisible"><a href="{{ url_for('update_member', user_id=user.id) }}">Update</a></td>
-        {% endif %}
+      {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
+        <td v-if="isVisible" class="m-0 p-0">
+            <div class="btn-group mt-2 p-0" role="group" style="height: 30px;">
+            <a class="btn btn-secondary btn-sm" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm ml-1">Delete</button>
+            </div>
+        </td>
+
+       {% endif %}
     </tr>
   {% endif %}
   </tbody>
 
 </table>
 
+
+
+
 {% endblock content %}
 
-{% block contentC %}<a class="nav-item nav-link text-primary ml-5 mt-1" @click="toggleElement"><b>Update</b></a>{% endblock contentC %}
+{% block contentC %}<a class="nav-item nav-link text-primary ml-5 mt-1" @click="toggleElement" id="updBtn"><b>Update</b></a>{% endblock contentC %}

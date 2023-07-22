@@ -22,14 +22,14 @@ class RegistrationForm(FlaskForm):
                              validators=[DataRequired(), Length(min=2, max=20)])
     last_name = StringField('Last Name',
                             validators=[DataRequired(), Length(min=2, max=20)])
-    grade = StringField('Grade')
+    grade = StringField('Grade', validators=[Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     phone = StringField('Phone Number', validators=[DataRequired()])
-    chapter = StringField('Chapter')
+    chapter = StringField('Chapter', validators=[Length(min=2, max=20)])
     chapter_pres = BooleanField('Chapter President Role')
     org_staff = BooleanField('Organizational Staff Role')
-    submit = SubmitField('Add a New Member')
+    submit = SubmitField('Submit')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()

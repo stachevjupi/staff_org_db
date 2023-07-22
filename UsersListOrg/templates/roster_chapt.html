@@ -22,8 +22,13 @@
       <td>{{ user.grade }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.phone }}</td>
-         {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
-            <td v-if="isVisible"><a href="{{ url_for('update_member', user_id=user.id) }}">Update</a></td>
+        {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
+        <td v-if="isVisible" class="m-0 p-0">
+            <div class="btn-group mt-2 p-0" role="group" style="height: 30px;">
+            <a class="btn btn-secondary btn-sm" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            </div>
+        </td>
         {% endif %}
     </tr>
 
@@ -37,7 +42,12 @@
       <td>{{ users.email }}</td>
       <td>{{ users.phone }}</td>
         {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
-            <td v-if="isVisible"><a href="{{ url_for('update_member', user_id=user.id) }}">Update</a></td>
+        <td v-if="isVisible" class="m-0 p-0">
+            <div class="btn-group mt-2 p-0" role="group" style="height: 30px;">
+            <a class="btn btn-secondary btn-sm" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            </div>
+        </td>
         {% endif %}
     </tr>
   {% endif %}

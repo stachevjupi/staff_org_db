@@ -4,7 +4,7 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Add a New Member</legend>
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
                 <div class="form-group">
                     {{ form.first_name.label(class="form-control-label") }}
                     {% if form.first_name.errors %}
@@ -103,7 +103,7 @@
 {% if current_user.org_staff == 1 %}
 
                 <div>
-                     <div v-if="!checkboxValue">
+                     <div v-if="!orgStaffValue">
                          <div id="chapter" class="align-items-start">
                             <p class="p-2 ml-5 mt-5 text-warning">For Organizational Staff - Not Required</p>
                  <div class="form-group">
@@ -166,7 +166,7 @@
 
                 <div class="form-group d-flex flex-row align-items-start mt-5">
                       <div class="p-2">{{ form.org_staff.label(class="form-control-label") }}</div>
-                    <div class="form-check p-2 ml-3 mt-1" @change="toggleDiv">
+                    <div class="form-check p-2 ml-3 mt-1">
                         {% if form.org_staff.errors %}
                             {{ form.org_staff(class="form-check-input is-invalid") }}
                             <div class="invalid-feedback p-2 ml-3 mt-1">
@@ -175,7 +175,7 @@
                                 {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.org_staff(class="form-check-input") }}
+                            {{ form.org_staff(id="orgStaffCheckbox", class="form-check-input") }}
                         {% endif %}
                     </div>
                 </div>

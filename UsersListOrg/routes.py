@@ -102,7 +102,7 @@ def register():
         elif chapter_sel:
             chapter = chapter_sel
         elif current_user.chapter_pres == 1:
-            chapter=current_user.chapter
+            chapter = current_user.chapter
         else:
             chapter = "Not Specified"
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, grade=grade,
@@ -117,7 +117,7 @@ def register():
         print(password)
         return redirect(url_for('login'))
     return render_template('register.html', title='Registration', form=form, chapters=unique_chapters,
-                           grades=unique_grades)
+                           grades=unique_grades, legend='Add a New Member')
 
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
@@ -223,7 +223,7 @@ def arrange_chapt(variable1, variable2):
 @login_required
 def update_member(user_id):
     user = User.query.get_or_404(user_id)
-    if current_user.id != user_id and (current_user.chapter == user.chapter and current_user.chapter_pres == 0)\
+    if current_user.id != user_id and (current_user.chapter == user.chapter and current_user.chapter_pres == 0) \
             and current_user.org_staff == 0:
         abort(403)
     users = User.query.all()
@@ -237,6 +237,10 @@ def update_member(user_id):
             chapters.append(member.chapter)
         unique_grades = list(set(grades))
         unique_chapters = list(set(chapters))
+    password = user.password
+    grade_org = user.grade
+    chapter_org = user.chapter
+    db.session.delete(user)
     form = RegistrationForm()
     if form.validate_on_submit():
         chapter_pres = 1 if form.chapter_pres.data else 0
@@ -246,6 +250,8 @@ def update_member(user_id):
             grade = form.grade.data
         elif grade_sel:
             grade = grade_sel
+        elif grade_org:
+            grade = grade_org
         else:
             grade = "Not Specified"
         chapter_sel = request.form.get('selectedChapter')
@@ -254,20 +260,21 @@ def update_member(user_id):
         elif chapter_sel:
             chapter = chapter_sel
         elif current_user.chapter_pres == 1:
-            chapter=current_user.chapter
+            chapter = current_user.chapter
+        elif chapter_org:
+            chapter = chapter_org
         else:
             chapter = "Not Specified"
-        user.first_name = form.first_name.data
-        user.last_name = form.last_name.data
-        user.grade = grade
-        user.email = form.email.data
-        user.phone = form.phone.data
-        user.chapter = chapter
-        user.chapter_pres = chapter_pres
-        user.org_staff = org_staff
+        user_updated = User(first_name=form.first_name.data, last_name=form.last_name.data, grade=grade,
+                            email=form.email.data, phone=form.phone.data, password=password, chapter=chapter,
+                            chapter_pres=chapter_pres, org_staff=org_staff)
+        db.session.add(user_updated)
         db.session.commit()
         flash('Your member data has been updated!', 'success')
-        return redirect(url_for('rosters'))
+        if current_user.org_staff == 1:
+            return redirect(url_for('rosters'))
+        else:
+            return redirect(url_for('chptr'))
     elif request.method == 'GET':
         form.first_name.data = user.first_name
         form.last_name.data = user.last_name
@@ -277,21 +284,38 @@ def update_member(user_id):
         form.chapter.data = user.chapter
         form.chapter_pres.data = user.chapter_pres
         form.org_staff.data = user.org_staff
-    return render_template('register.html', title='Update Post', form=form, legend='Update Member data',
+    return render_template('register.html', title='Update Post', form=form, legend='Update Member Data',
                            chapters=unique_chapters,
                            grades=unique_grades)
 
 
-# @app.route("/post/<int:post_id>/delete", methods=['POST'])
-# @login_required
-# def delete_post(post_id):
-#     post = Post.query.get_or_404(post_id)
-#     if current_user.username == 'Admin':
-#         db.session.delete(post)
-#         db.session.commit()
-#     elif post.author != current_user:
-#         abort(403)
-#     db.session.delete(post)
-#     db.session.commit()
-#     flash('Your post has been deleted!', 'success')
-#     return redirect(url_for('posts'))
+@app.route("/roster/<int:user_id>/delete", methods=['GET'])
+@login_required
+def delete_member(user_id):
+    user = User.query.get_or_404(user_id)
+    if current_user.id != user_id and (current_user.chapter == user.chapter and current_user.chapter_pres == 0)\
+            and current_user.org_staff == 0:
+        abort(403)
+    else:
+        db.session.delete(user)
+        db.session.commit()
+    flash('Your membership has been deleted!', 'success')
+    if current_user.org_staff == 1:
+        return redirect(url_for('rosters'))
+    else:
+        return redirect(url_for('chptr'))
+
+
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('errors/404.html'), 404
+
+
+@app.errorhandler(403)
+def error_403(error):
+    return render_template('errors/403.html'), 403
+
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template('errors/500.html'), 500
