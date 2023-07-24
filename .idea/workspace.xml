@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee5610cb-6c79-402d-a103-afd97f12da91" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/UsersListOrg/templates/last_org_staff.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/versions/acd8b1eccd13_.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/versions/c014aa507844_.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UsersListOrg/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UsersListOrg/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/models.py" afterDir="false" />
@@ -13,7 +16,8 @@
       <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/roster_chapt.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/roster_chapt.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/roster_org.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/roster_org.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/rosters.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/rosters.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pass.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pass.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitignore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gitignore.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pass.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
