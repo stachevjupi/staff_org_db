@@ -9,14 +9,17 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13mbjhv887vge280ba245'
 
-db_info = {'host': 'localhost',
-           'database': 'UsersListOrg',
-           'psw': 'Lena091165',
-           'user': 'postgres',
+db_info = {'host': 'dpg-civ96b95rnuhcnrjtpfg-a.frankfurt-postgres.render.com',
+           'database': 'stafflist',
+           'psw': 'is8pvYG4SkmvdBb6GgAeOORRIZAzHzBA',
+           'user': 'jupiplus',
            'port': '5432'}
 
-app.config[
-    'SQLALCHEMY_DATABASE_URI'] = f"postgresql://{db_info['user']}:{db_info['psw']}@{db_info['host']}/{db_info['database']}"
+# app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{db_info['user']}:{db_info['psw']}@{db_info['host']}/{db_info['database']}"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://jupiplus:is8pvYG4SkmvdBb6GgAeOORRIZAzHzBA@dpg-civ96b95rnuhcnrjtpfg-a.frankfurt-postgres.render.com/stafflist"
+
+# postgres://jupiplus:is8pvYG4SkmvdBb6GgAeOORRIZAzHzBA@dpg-civ96b95rnuhcnrjtpfg-a.frankfurt-postgres.render.com/stafflist
 
 db = flask_sqlalchemy.SQLAlchemy(app)
 migrate = flask_migrate.Migrate(app, db)

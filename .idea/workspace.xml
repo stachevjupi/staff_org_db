@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee5610cb-6c79-402d-a103-afd97f12da91" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/UsersListOrg/templates/last_org_staff.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/versions/acd8b1eccd13_.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/versions/c014aa507844_.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListOrg/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListOrg/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UsersListOrg/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UsersListOrg/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/roster_chapt.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/roster_chapt.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/roster_org.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/roster_org.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListOrg/templates/rosters.html" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListOrg/templates/rosters.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitignore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gitignore.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pass.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,15 +22,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/JUPIplus/github/UsersListOrg&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Stachev G.S/github/DI TLV/Final_Project",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Python.wsgi">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="UsersListOrg" />

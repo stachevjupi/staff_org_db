@@ -76,11 +76,11 @@ def register():
     # hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
     # print(password)
     # new_user = User(
-    #     first_name="first_name",
-    #     last_name="last_name",
+    #     first_name="JUPI",
+    #     last_name="PLUS",
     #     grade="grade",
-    #     email="email@gmail.com",
-    #     phone="+7894563214",
+    #     email="g.stachev@jupiplus.com",
+    #     phone="+380974556897",
     #     password=hashed_pw,
     #     chapter="Not Specified",
     #     chapter_pres= 0,
