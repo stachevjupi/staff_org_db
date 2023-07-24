@@ -17,16 +17,30 @@
   {% for user in users %}
     <tr>
       <th scope="row">{{ loop.index }}</th>
-      <td>{{ user.first_name }}</td>
-      <td>{{ user.last_name }}</td>
+      {% if current_user.id == user.id %}
+              <td class="text-primary">{{ user.first_name }}</td>
+              <td class="text-primary">{{ user.last_name }}</td>
+        {% else %}
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
+        {% endif %}
       <td>{{ user.grade }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.phone }}</td>
-         {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
+         {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1 and user.org_staff == 0) or current_user.org_staff == 1 %}
         <td v-if="isVisible" class="m-0 p-0">
             <div class="btn-group mt-2 p-0" role="group" style="height: 30px;">
-            <a class="btn btn-secondary btn-sm" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
-            <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            <a class="btn btn-secondary btn-sm" v-if="!showConfirmation" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
+            <button type="button"
+              v-if="!showConfirmation"
+              id="{{ loop.index }}"
+              class="btn btn-danger btn-sm ml-1 del-btn"
+              @click="showDeleteModal">Delete</button>
+
+                <div class="btn-group del-btn-yes" id="{{ loop.index }}" v-if="showConfirmation">
+                    <a class="btn btn-warning btn-sm"  href="{{ url_for('delete_member', user_id=user.id) }}">Delete</a>
+                    <button class="btn btn-info btn-sm ml-1" @click="cancelDelete">Close</button>
+                </div>
             </div>
         </td>
         {% endif %}
@@ -36,16 +50,30 @@
   {% else %}
    <tr>
       <th scope="row">1</th>
-      <td>{{ users.first_name }}</td>
-      <td>{{ users.last_name }}</td>
+      {% if current_user.id == users.id %}
+              <td class="text-primary">{{ users.first_name }}</td>
+              <td class="text-primary">{{ users.last_name }}</td>
+        {% else %}
+              <td>{{ users.first_name }}</td>
+              <td>{{ users.last_name }}</td>
+        {% endif %}
       <td>{{ users.grade }}</td>
       <td>{{ users.email }}</td>
       <td>{{ users.phone }}</td>
-        {% if current_user.id == user.id or (current_user.chapter == user.chapter and current_user.chapter_pres == 1) or current_user.org_staff == 1 %}
+        {% if current_user.id == users.id or (current_user.chapter == users.chapter and current_user.chapter_pres == 1 and users.org_staff == 0) or current_user.org_staff == 1 %}
         <td v-if="isVisible" class="m-0 p-0">
             <div class="btn-group mt-2 p-0" role="group" style="height: 30px;">
-            <a class="btn btn-secondary btn-sm" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
-            <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            <a class="btn btn-secondary btn-sm" v-if="!showConfirmation" href="{{ url_for('update_member', user_id=user.id) }}">Update</a>
+            <button type="button"
+              v-if="!showConfirmation"
+              id="{{ loop.index }}"
+              class="btn btn-danger btn-sm ml-1 del-btn"
+              @click="showDeleteModal">Delete</button>
+
+                <div class="btn-group del-btn-yes" id="{{ loop.index }}" v-if="showConfirmation">
+                    <a class="btn btn-warning btn-sm"  href="{{ url_for('delete_member', user_id=users.id) }}">Delete</a>
+                    <button class="btn btn-info btn-sm ml-1" @click="cancelDelete">Close</button>
+                </div>
             </div>
         </td>
         {% endif %}

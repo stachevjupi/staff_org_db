@@ -22,11 +22,11 @@ class RegistrationForm(FlaskForm):
                              validators=[DataRequired(), Length(min=2, max=20)])
     last_name = StringField('Last Name',
                             validators=[DataRequired(), Length(min=2, max=20)])
-    grade = StringField('Grade', validators=[Length(min=2, max=20)])
+    grade = StringField('Grade', validators=[Length(max=40)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     phone = StringField('Phone Number', validators=[DataRequired()])
-    chapter = StringField('Chapter', validators=[Length(min=2, max=20)])
+    chapter = StringField('Chapter', validators=[Length(max=40)])
     chapter_pres = BooleanField('Chapter President Role')
     org_staff = BooleanField('Organizational Staff Role')
     submit = SubmitField('Submit')
