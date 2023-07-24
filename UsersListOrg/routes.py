@@ -8,6 +8,11 @@ import string
 from flask_mail import Message
 
 
+@app.route('/health')
+def health():
+    return "ok"
+
+
 @app.route("/", methods=(['POST', 'GET']))
 def login():
     if current_user.is_authenticated and current_user.org_staff == 1:
@@ -323,7 +328,7 @@ def delete_member(user_id):
     total_items = db.session.query(User).count()
     print(org_count)
     print(total_items)
-    if current_user.id != user_id and (current_user.chapter == user.chapter and current_user.chapter_pres == 0)\
+    if current_user.id != user_id and (current_user.chapter == user.chapter and current_user.chapter_pres == 0) \
             and current_user.org_staff == 0:
         abort(403)
     elif current_user.org_staff == 0 and user.org_staff == 1:
