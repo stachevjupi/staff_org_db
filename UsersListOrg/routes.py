@@ -206,8 +206,9 @@ def chapter(chapt):
 @app.route("/rosters/chapter")
 @login_required
 def chptr():
+    chapter = current_user.chapter
     users = User.query.filter_by(chapter=current_user.chapter).all()
-    return render_template('rosters.html', users=users)
+    return render_template('rosters.html', users=users, title=chapter)
 
 
 @app.route("/arrange/<string:variable>")
